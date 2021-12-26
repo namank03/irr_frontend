@@ -5,9 +5,17 @@ import Loader from "./layout/Loader";
 
 const ProcessFile = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetFileQuery(id);
+  const { data, isLoading, isError } = useGetFileQuery(id);
 
   if (isLoading) return <Loader />;
+
+  if (isError) {
+    return (
+      <h2 className='font-mono font-bold text-xl text-center pt-5'>
+        Something went wrong...!!
+      </h2>
+    );
+  }
 
   return (
     <>

@@ -8,7 +8,8 @@ import { useDropzone } from "react-dropzone";
 const FileUpload = () => {
   const navigate = useNavigate();
 
-  const [fileUpload, { data: result, isLoading }] = useFileUploadMutation();
+  const [fileUpload, { data: result, isLoading, isError }] =
+    useFileUploadMutation();
 
   const {
     getRootProps,
@@ -32,6 +33,14 @@ const FileUpload = () => {
   }, [navigate, result]);
 
   if (isLoading) <Loader />;
+
+  if (isError) {
+    return (
+      <h2 className='font-mono font-bold text-xl text-center pt-5'>
+        Something went wrong...!!
+      </h2>
+    );
+  }
 
   return (
     <div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 '>

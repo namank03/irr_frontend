@@ -4,10 +4,18 @@ import File from "./File";
 import Loader from "./layout/Loader";
 
 const FileList = () => {
-  const { data: files, isLoading } = useGetFilesQuery();
+  const { data: files, isLoading, isError } = useGetFilesQuery();
 
   if (isLoading) return <Loader />;
   if (!files) return <div>No Files Found!!</div>;
+
+  if (isError) {
+    return (
+      <h2 className='font-mono font-bold text-xl text-center pt-5'>
+        Something went wrong...!!
+      </h2>
+    );
+  }
 
   return (
     <>
