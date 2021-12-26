@@ -1,17 +1,30 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useFileUploadMutation } from "../store/api/fileApi";
 import Loader from "./layout/Loader";
 
+import { useDropzone } from "react-dropzone";
+
 const FileUpload = () => {
-  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
   const [fileUpload, { data: result, isLoading }] = useFileUploadMutation();
 
-  const onFileUpload = (data) => {
-    fileUpload(data.file[0]);
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+    acceptedFiles,
+  } = useDropzone({
+    accept: ".xlsx,.xls",
+  });
+
+  const onFileUpload = (e) => {
+    e.preventDefault();
+    console.log(`acceptedFiles`, acceptedFiles);
+    fileUpload(acceptedFiles[0]);
   };
 
   useEffect(() => {
@@ -33,28 +46,25 @@ const FileUpload = () => {
             Upload File
           </h2>
         </div>
-        <form
-          className='mt-8 space-y-6'
-          onSubmit={handleSubmit((data) => onFileUpload(data))}
-        >
+        <form className='mt-8 space-y-6' onSubmit={(e) => onFileUpload(e)}>
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <div>
               <label htmlFor='file' className='sr-only'>
                 File
               </label>
-              <input
-                {...register("file", {
-                  required: "This field is required",
-                })}
-                id='file'
-                name='file'
-                type='file'
-                autoComplete='file'
-                required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                placeholder='File'
-              />
+              <div className='text-center border-2 p-2 rounded-md'>
+                {acceptedFiles?.length < 1 ? (
+                  <div {...getRootProps({ className: "dropzone" })}>
+                    <input {...getInputProps()} />
+                    {isDragAccept && <p>All files will be accepted</p>}
+                    {isDragReject && <p>Some files will be rejected</p>}
+                    {!isDragActive && <p>Drop some files here ...</p>}
+                  </div>
+                ) : (
+                  acceptedFiles[0]?.name
+                )}
+              </div>
             </div>
           </div>
           <div>
