@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetFileQuery } from "../store/api/fileApi";
+import GetProgress from "../utility/GetProgress";
 import Loader from "./layout/Loader";
 
 const ProcessFile = () => {
+  const [result, setResult] = useState(null);
   const { id } = useParams();
-  const { data, isLoading, isError } = useGetFileQuery(id);
+  const { data, isLoading, isError, isSuccess } = useGetFileQuery(id);
 
   if (isLoading) return <Loader />;
 
@@ -17,9 +19,14 @@ const ProcessFile = () => {
     );
   }
 
+  if (isSuccess && result === null) {
+    console.log("inside");
+    return <GetProgress taskId={data?.task} onTaskComplete={setResult} />;
+  }
+
   return (
     <>
-      {data && (
+      {result && (
         <section className='container mx-auto p-6 font-mono'>
           <div className='w-full mb-8 overflow-hidden rounded-lg shadow-lg'>
             <div className='w-full overflow-x-auto'>
@@ -31,7 +38,7 @@ const ProcessFile = () => {
                   </tr>
                 </thead>
                 <tbody className='bg-white'>
-                  {JSON.parse(data).map((val, index) => (
+                  {JSON.parse(result).map((val, index) => (
                     <tr key={index} className='text-gray-700'>
                       <td className='px-4 py-3 text-ms font-semibold border'>
                         {val["X1"]}
