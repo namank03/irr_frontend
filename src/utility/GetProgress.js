@@ -21,7 +21,17 @@ const GetProgress = ({ taskId, onTaskComplete }) => {
     };
     getProgress();
   }, [taskId, onTaskComplete]);
-  return <div>{progress}</div>;
+  return (
+    <>
+      <h1 className='text-center font-bold text-xl p-4'>{progress}%</h1>
+      <div className='h-1 w-full bg-gray-300'>
+        <div
+          style={{ width: `${progress}%` }}
+          className={`h-full ${progress < 70 ? "bg-red-600" : "bg-green-600"}`}
+        ></div>
+      </div>
+    </>
+  );
 };
 
 export default GetProgress;
