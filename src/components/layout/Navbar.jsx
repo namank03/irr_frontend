@@ -10,7 +10,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const signout = () => {
-    console.log("signinout triggered");
     localStorage.removeItem("token");
     dispatch(defaultState());
     navigate("/signin", { replace: true });

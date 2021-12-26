@@ -1,22 +1,29 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import Loader from "../../components/layout/Loader";
 import { useSigninUserMutation } from "../../store/api/authApi";
 import { setUsername } from "../../store/state/authSlice";
 
 const Signin = () => {
-  const [signinUser] = useSigninUserMutation();
-
-  const navigate = useNavigate();
+  const [signinUser, { isError, isLoading }] = useSigninUserMutation();
   const dispatch = useDispatch();
 
   const { register, handleSubmit } = useForm();
 
+  if (isLoading) <Loader />;
+
+  if (isError) {
+    return (
+      <h2 className='font-mono font-bold text-xl text-center pt-5'>
+        Something went wrong...!!
+      </h2>
+    );
+  }
+
   const onUserSignIn = (data) => {
     dispatch(setUsername(data.username));
     signinUser(data);
-    navigate("/");
   };
 
   return (

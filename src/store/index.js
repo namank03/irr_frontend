@@ -11,6 +11,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(authApi.middleware)
+      // .concat(authApi.middleware)
       .concat(fileApi.middleware),
 });
