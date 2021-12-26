@@ -5,7 +5,7 @@ const GetProgress = ({ taskId, onTaskComplete }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const getProgress = (async) => {
+    const getProgress = async () => {
       return axios
         .get(`http://localhost:8000/celery-progress/${taskId}`)
         .then((res) => {

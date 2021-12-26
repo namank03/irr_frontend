@@ -16,8 +16,6 @@ import Signin from "./pages/Signin/Signin";
 const App = () => {
   const { token } = useSelector((state) => state.auth);
 
-  console.log(`app-token`, token);
-
   return (
     <>
       <Router>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetFileQuery } from "../store/api/fileApi";
-import GetProgress from "../utility/GetProgress";
+import GetProgress from "./GetProgress";
 import Loader from "./layout/Loader";
 
 const ProcessFile = () => {
@@ -20,7 +20,6 @@ const ProcessFile = () => {
   }
 
   if (isSuccess && result === null) {
-    console.log("inside");
     return <GetProgress taskId={data?.task} onTaskComplete={setResult} />;
   }
 
