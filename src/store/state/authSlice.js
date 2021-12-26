@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../api/authApi";
 
 const initialState = {
-  username: null,
+  username: localStorage.getItem("username"),
   token: localStorage.getItem("token"),
 };
 
@@ -12,6 +12,7 @@ export const authSlice = createSlice({
   reducers: {
     setUsername: (state, action) => {
       state.username = action.payload;
+      localStorage.setItem("username", action.payload);
     },
     defaultState: (state) => {
       state.token = null;
