@@ -35,8 +35,10 @@ const App = () => {
             path='/signin'
             element={!token ? <Signin /> : <Navigate to='/' />}
           />
-          <Route path='process-file/:id' element={<ProcessFile />} />
-
+          <Route
+            path='process-file/:id'
+            element={token ? <ProcessFile /> : <Navigate to='/signin' />}
+          />
           <Route path='*' element={<Error404 />} />
         </Routes>
       </Router>

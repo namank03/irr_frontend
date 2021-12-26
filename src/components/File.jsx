@@ -8,9 +8,10 @@ function File({ file }) {
         {file.file.substring(file.file.lastIndexOf("/") + 1)}
       </td>
       <td className='px-4 py-3 text-sm border'>{file.created_at}</td>
-      <td className='px-4 py-3 text-sm border'>
+      <td className='px-4 py-3 text-sm border bg-black'>
         <Link
-          className='m-2 border-2 p-2 rounded-lg cursor-pointer shadow-sm bg-gray-900 text-white'
+          className='inline-block text-sm px-4 py-2 leading-none  text-white rounded-lg hover:text-gray-900 
+          hover:bg-white mt-4 lg:mt-0 w-full text-center'
           to={`process-file/${file.id}`}
         >
           Calculate IRR

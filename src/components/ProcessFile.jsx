@@ -10,7 +10,6 @@ const ProcessFile = () => {
   const { data, isLoading, isError, isSuccess } = useGetFileQuery(id);
 
   if (isLoading) return <Loader />;
-
   if (isError) {
     return (
       <h2 className='font-mono font-bold text-xl text-center pt-5'>
@@ -18,7 +17,6 @@ const ProcessFile = () => {
       </h2>
     );
   }
-
   if (isSuccess && result === null) {
     return <GetProgress taskId={data?.task} onTaskComplete={setResult} />;
   }
